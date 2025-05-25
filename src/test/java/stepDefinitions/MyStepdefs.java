@@ -2,12 +2,17 @@ package stepDefinitions;
 
 import base.Baseclass;
 import base.Reusablefunctions;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import pageFactory.Login;
+
+import java.util.List;
+import java.util.Map;
 
 public class MyStepdefs {
 
@@ -35,8 +40,17 @@ public class MyStepdefs {
         public void userClicksOnLoginButton() {
                 Login login = new Login(driver);
                 Reusablefunctions.click(login.loginButton);
+                Assert.assertEquals(Reusablefunctions.getCurrentUrl(driver), "https://www.saucedemo.com/inventory.html");
         }
 
 
-
+        @When("user enters following credentials")
+        public void userEntersFollowingCredentials(DataTable dataTable) {
+                List<Map<String, String>> data = dataTable.asMaps(String.class, String.class); //List<Map<String, String>>
+                String username = data.get(0).get("username");
+                String password = data.get(0).get("password");
+                Login login = new Login(driver);
+                Reusablefunctions.sendKeys(login.username, username);
+                Reusablefunctions.sendKeys(login.password, password);
+        }
 }

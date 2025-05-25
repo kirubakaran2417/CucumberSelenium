@@ -26,5 +26,10 @@ public class Baseclass {
         driver.get(url);
     }
 
+    //quit the browser
+    public void quitBrowser() {
+        driver.quit();
+    }
+
 
 }
